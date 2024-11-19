@@ -1,0 +1,38 @@
+{
+  "name": "ts-astar-pathfinder",
+  "version": "1.0.0",
+  "description": "A simple A* pathfinding algorithm implementation in TypeScript.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "test": "jest",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc",
+    "example": "ts-node examples/"
+  },
+  "keywords": [
+    "pathfinding",
+    "A*",
+    "algorithm",
+    "typescript"
+  ],
+  "author": "Jarno Mensink",
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "@types/jest": "^29.5.14",
+    "eslint": "^9.15.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.12.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.3.3",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.15.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jarnodev/ts-astar-pathfinder"
+  }
+}
