@@ -55,8 +55,8 @@ export class MinHeap<T> {
         const length = this.heap.length;
         const item = this.heap[index];
         while (true) {
-            let leftIndex = 2 * index + 1;
-            let rightIndex = 2 * index + 2;
+            const leftIndex = 2 * index + 1;
+            const rightIndex = 2 * index + 2;
             let smallest = index;
 
             if (leftIndex < length && this.compare(this.heap[leftIndex], this.heap[smallest]) < 0) {

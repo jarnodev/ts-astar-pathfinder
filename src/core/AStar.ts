@@ -9,7 +9,6 @@ export class AStar {
     private goal: Node;
     private heuristic: (node: Node, goal: Node) => number;
 
-    // Modify the constructor to accept an optional custom heuristic function
     constructor(grid: Node[][], start: Node, goal: Node, heuristic?: (node: Node, goal: Node) => number) {
         this.grid = grid;
         this.start = start;
@@ -17,7 +16,6 @@ export class AStar {
         this.openList = new MinHeap((a, b) => a.f - b.f);
         this._closedList = new Set();
 
-        // If no custom heuristic is provided, use the default one (Manhattan)
         this.heuristic = heuristic || this.defaultHeuristic;
     }
 
@@ -65,7 +63,7 @@ export class AStar {
                 const tentativeG = currentNode.g + 1;
                 if (tentativeG < neighbor.g) {
                     neighbor.g = tentativeG;
-                    neighbor.h = this.heuristic(neighbor, this.goal); // Use the custom or default heuristic
+                    neighbor.h = this.heuristic(neighbor, this.goal);
                     neighbor.f = neighbor.g + neighbor.h;
                     neighbor.parent = currentNode;
 
@@ -79,7 +77,6 @@ export class AStar {
         return [];
     }
 
-    // Default heuristic: Manhattan Distance
     defaultHeuristic(node: Node, goal: Node): number {
         return Math.abs(node.x - goal.x) + Math.abs(node.y - goal.y);
     }
