@@ -19,13 +19,13 @@ This package provides an efficient A\* (A-Star) pathfinding implementation in Ty
 Install the package via npm:
 
 ```bash
-npm install your-package-name
+npm install astar-pathfinder
 ```
 
 or via yarn:
 
 ```bash
-yarn add your-package-name
+yarn add astar-pathfinder
 ```
 
 ## Usage
@@ -33,7 +33,7 @@ yarn add your-package-name
 ### Basic Example
 
 ```typescript
-import { Node, AStar } from 'your-package-name';
+import { Node, AStar } from 'astar-pathfinder';
 
 // Create a 5x5 grid
 const grid: Node[][] = [];
