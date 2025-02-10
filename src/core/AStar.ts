@@ -4,7 +4,7 @@ import { MinHeap } from './MinHeap';
 export class AStar {
     private grid: Node[][];
     private openList: MinHeap<Node>;
-    private _closedList: Set<Node>;
+    private closedList: boolean[][];
     private start: Node;
     private goal: Node;
     private heuristic: (node: Node, goal: Node) => number;
@@ -14,13 +14,11 @@ export class AStar {
         this.start = start;
         this.goal = goal;
         this.openList = new MinHeap((a, b) => a.f - b.f);
-        this._closedList = new Set();
+        this.closedList = Array.from({ length: grid.length }, () =>
+            new Array(grid[0].length).fill(false)
+        );
 
         this.heuristic = heuristic || this.defaultHeuristic;
-    }
-
-    get closedList(): Set<Node> {
-        return this._closedList;
     }
 
     isValidPosition(x: number, y: number): boolean {
@@ -42,12 +40,13 @@ export class AStar {
         this.openList.push(this.start);
 
         const directions = [
-            [0, 1], [1, 0], [0, -1], [-1, 0]
+            [0, 1], [1, 0], [0, -1], [-1, 0], // Cardinal (Right, Down, Left, Up)
+            [1, 1], [-1, -1], [1, -1], [-1, 1] // Diagonal (↘ ↖ ↙ ↗)
         ];
 
         while (!this.openList.isEmpty()) {
             const currentNode = this.openList.pop()!;
-            this.closedList.add(currentNode);
+            this.closedList[currentNode.x][currentNode.y] = true;
 
             if (currentNode === this.goal) return this.reconstructPath(currentNode);
 
@@ -55,21 +54,18 @@ export class AStar {
                 const nx = currentNode.x + dx;
                 const ny = currentNode.y + dy;
 
-                if (!this.isValidPosition(nx, ny)) continue;
+                if (!this.isValidPosition(nx, ny) || this.closedList[nx][ny]) continue;
 
                 const neighbor = this.grid[nx][ny];
-                if (this.closedList.has(neighbor)) continue;
-
                 const tentativeG = currentNode.g + 1;
+
                 if (tentativeG < neighbor.g) {
                     neighbor.g = tentativeG;
                     neighbor.h = this.heuristic(neighbor, this.goal);
                     neighbor.f = neighbor.g + neighbor.h;
                     neighbor.parent = currentNode;
 
-                    if (!this.openList.has(neighbor)) {
-                        this.openList.push(neighbor);
-                    }
+                    this.openList.push(neighbor); // No need to check existence, heap will handle it
                 }
             }
         }
