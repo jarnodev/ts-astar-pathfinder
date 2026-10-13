@@ -4,7 +4,7 @@ export class MinHeap<T> {
 
     /**
      * Constructs a MinHeap.
-     * @param compare A comparison function that determines the heap order. 
+     * @param compare A comparison function that determines the heap order.
      * Should return:
      * - A negative number if `a` has higher priority than `b`
      * - 0 if they are equal
@@ -35,8 +35,8 @@ export class MinHeap<T> {
         return this.heap.length === 0;
     }
 
-    has(item: T): boolean {
-        return this.heap.includes(item);
+    get size(): number {
+        return this.heap.length;
     }
 
     private bubbleUp(index: number): void {
@@ -57,17 +57,16 @@ export class MinHeap<T> {
         while (true) {
             const leftIndex = 2 * index + 1;
             const rightIndex = 2 * index + 2;
-            let smallest = index;
+            if (leftIndex >= length) break;
 
-            if (leftIndex < length && this.compare(this.heap[leftIndex], this.heap[smallest]) < 0) {
-                smallest = leftIndex;
-            }
-
-            if (rightIndex < length && this.compare(this.heap[rightIndex], this.heap[smallest]) < 0) {
+            // Pick the smaller child, then compare it against the item being sifted down
+            // (heap[index] holds a stale value once the item has moved).
+            let smallest = leftIndex;
+            if (rightIndex < length && this.compare(this.heap[rightIndex], this.heap[leftIndex]) < 0) {
                 smallest = rightIndex;
             }
 
-            if (smallest === index) break;
+            if (this.compare(this.heap[smallest], item) >= 0) break;
             this.heap[index] = this.heap[smallest];
             index = smallest;
         }
