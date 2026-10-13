@@ -1,10 +1,7 @@
-import { AStar } from '../src/core/AStar';
-import { Node } from '../src/core/Node';
+import { AStar, Node } from '../src';
 
 const createGrid = (rows: number, cols: number): Node[][] =>
-    Array.from({ length: rows }, (_, x) =>
-        Array.from({ length: cols }, (_, y) => new Node(x, y))
-    );
+    Array.from({ length: rows }, (_, x) => Array.from({ length: cols }, (_, y) => new Node(x, y)));
 
 // Create a 10x10 grid
 const grid = createGrid(10, 10);
@@ -21,4 +18,7 @@ for (let i = 2; i < 8; i++) {
 const aStar = new AStar(grid, start, goal);
 const path = aStar.findPath();
 
-console.log('Complex Grid Path:', path.map(node => `(${node.x}, ${node.y})`));
+console.log(
+    'Complex Grid Path:',
+    path.map((node) => `(${node.x}, ${node.y})`),
+);
